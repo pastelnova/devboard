@@ -1,12 +1,18 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { TaskService } from './core/services/task';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.scss'
+  template: `
+    <h1>DevBoard</h1>
+    <p>Total tasks: {{ taskService.totalTasks() }}</p>
+    <p>Done: {{ taskService.doneCount() }}</p>
+    <p>In progress: {{ taskService.inProgressCount() }}</p>
+    <p>Completion: {{ taskService.completionRate() }}%</p>
+  `,
+  styleUrl: './app.scss',
 })
 export class App {
-  protected readonly title = signal('devboard');
+  taskService = inject(TaskService);
 }
