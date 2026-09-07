@@ -2,16 +2,22 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TaskService } from './core/services/task';
 import { TaskListComponent } from './features/tasks/task-list/task-list';
+import { ThemeToggleComponent } from './shared/components/theme-toggle/theme-toggle';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [TaskListComponent],
+  imports: [TaskListComponent, ThemeToggleComponent],
   template: `
     <div class="app">
       <header class="app-header">
-        <h1>🧑‍💻 DevBoard</h1>
-        <p>Your developer task manager</p>
+        <div class="header-content">
+          <div>
+            <h1>🧑‍💻 DevBoard</h1>
+            <p>Your developer task manager</p>
+          </div>
+          <app-theme-toggle />
+        </div>
       </header>
       <main>
         <app-task-list />
@@ -22,22 +28,27 @@ import { TaskListComponent } from './features/tasks/task-list/task-list';
     `
       .app {
         min-height: 100vh;
-        background: #f9fafb;
       }
       .app-header {
         background: #1e293b;
         color: white;
-        padding: 20px 24px;
-        margin-bottom: 0;
+        padding: 16px 24px;
       }
-      .app-header h1 {
-        margin: 0;
-        font-size: 24px;
+      .header-content {
+        max-width: 800px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
-      .app-header p {
-        margin: 4px 0 0;
-        opacity: 0.7;
-        font-size: 14px;
+      h1 {
+        font-size: 22px;
+        font-weight: 700;
+      }
+      p {
+        font-size: 13px;
+        opacity: 0.6;
+        margin-top: 2px;
       }
       main {
         padding: 24px;

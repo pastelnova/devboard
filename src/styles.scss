@@ -1,1 +1,55 @@
-/* You can add global styles to this file, and also import other style files */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #F9FAFB;
+  color: #111827;
+  transition: background 0.3s, color 0.3s;
+}
+
+// Dark theme — when ThemeService adds class to body
+body.dark-theme {
+  background: #0F172A;
+  color: #F1F5F9;
+
+  // Carduri
+  app-task-card .card {
+    background: #1E293B;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+
+    .title       { color: #F1F5F9; }
+    .description { color: #94A3B8; }
+  }
+
+  // Header
+  .app-header { background: #0F172A; border-bottom: 1px solid #1E293B; }
+
+  // Filtre
+  app-task-filter {
+    .search, select {
+      background: #1E293B;
+      border-color: #334155;
+      color: #F1F5F9;
+    }
+    .reset-btn {
+      background: #1E293B;
+      border-color: #334155;
+      color: #94A3B8;
+    }
+  }
+
+  // Stats
+  .stat { background: #1E293B; color: #94A3B8; }
+
+  // Empty state
+  .empty button {
+    background: #1E293B;
+    border-color: #334155;
+    color: #94A3B8;
+  }
+}
