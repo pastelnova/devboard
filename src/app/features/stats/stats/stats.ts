@@ -77,9 +77,7 @@ import { TaskService } from '../../../core/services/task';
   styles: [
     `
       .stats-container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 0 24px 24px;
+        padding-bottom: 24px;
       }
       h2 {
         font-size: 20px;

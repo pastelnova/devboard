@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TaskService } from './core/services/task';
 import { TaskListComponent } from './features/tasks/task-list/task-list';
 import { ThemeToggleComponent } from './shared/components/theme-toggle/theme-toggle';
@@ -8,44 +8,24 @@ import { StatsComponent } from './features/stats/stats/stats';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [TaskListComponent, ThemeToggleComponent, StatsComponent],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet, ThemeToggleComponent],
   template: `
     <div class="app">
       <header class="app-header">
         <div class="header-content">
-          <div>
+          <div class="brand">
             <h1>DevBoard</h1>
             <p>Your developer task manager</p>
           </div>
+          <nav class="nav">
+            <a routerLink="/tasks" routerLinkActive="active" class="nav-link"> Tasks </a>
+            <a routerLink="/stats" routerLinkActive="active" class="nav-link"> Stats </a>
+          </nav>
           <app-theme-toggle />
         </div>
       </header>
       <main>
-        <app-task-list />
-
-        <div
-          style="height: 100vh; display:flex; align-items:center; 
-              justify-content:center; color: gray; font-size: 14px"
-        ></div>
-
-        @defer (on viewport) {
-          <app-stats />
-        } @loading (minimum 400ms) {
-          <div class="stats-loading">
-            <div class="skeleton-title"></div>
-            <div class="skeleton-grid">
-              @for (i of [1, 2, 3, 4, 5, 6]; track i) {
-                <div class="skeleton-card"></div>
-              }
-            </div>
-          </div>
-        } @error {
-          <div class="stats-error">
-            <p>Failed to load statistics.</p>
-          </div>
-        } @placeholder {
-          <div class="stats-placeholder">Statistics load when you scroll here...</div>
-        }
+        <router-outlet />
       </main>
     </div>
   `,
@@ -55,11 +35,13 @@ import { StatsComponent } from './features/stats/stats/stats';
         min-height: 100vh;
         background: var(--bg-app);
       }
-
       .app-header {
         background: var(--bg-header);
         color: white;
         padding: 16px 24px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
       }
       .header-content {
         max-width: 800px;
@@ -67,71 +49,43 @@ import { StatsComponent } from './features/stats/stats/stats';
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 16px;
       }
-      h1 {
-        font-size: 22px;
+      .brand h1 {
+        font-size: 20px;
         font-weight: 700;
       }
-      p {
-        font-size: 13px;
+      .brand p {
+        font-size: 12px;
         opacity: 0.6;
         margin-top: 2px;
       }
 
-      /* Placeholder — before scroll */
-      .stats-placeholder {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 32px 24px;
-        text-align: center;
-        color: var(--text-muted);
+      .nav {
+        display: flex;
+        gap: 4px;
+      }
+      .nav-link {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 8px;
         font-size: 14px;
-        border: 2px dashed var(--border-color);
-        border-radius: 10px;
-        margin-bottom: 24px;
+        font-weight: 500;
+        transition: all 0.15s;
       }
-
-      /* Loading skeleton */
-      .stats-loading {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 0 24px 24px;
+      .nav-link:hover {
+        color: white;
+        background: rgba(255, 255, 255, 0.1);
       }
-      .skeleton-title {
-        height: 28px;
-        width: 200px;
-        background: var(--border-color);
-        border-radius: 6px;
-        margin-bottom: 16px;
-        animation: pulse 1.5s infinite;
+      .nav-link.active {
+        color: white;
+        background: rgba(255, 255, 255, 0.2);
       }
-      .skeleton-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 14px;
-      }
-      .skeleton-card {
-        height: 100px;
-        background: var(--border-color);
-        border-radius: 10px;
-        animation: pulse 1.5s infinite;
-      }
-      @keyframes pulse {
-        0%,
-        100% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.5;
-        }
-      }
-
-      .stats-error {
-        max-width: 800px;
-        margin: 0 auto;
+      main {
         padding: 24px;
-        text-align: center;
-        color: #ef4444;
+        max-width: 800px;
+        margin: 0 auto;
       }
     `,
   ],
