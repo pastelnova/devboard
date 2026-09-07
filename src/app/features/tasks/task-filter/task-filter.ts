@@ -30,29 +30,35 @@ import { TaskService } from '../../../core/services/task';
         flex: 1;
         min-width: 200px;
         padding: 8px 12px;
-        border: 1px solid #e5e7eb;
+        border: 1px solid var(--border-color);
         border-radius: 8px;
         font-size: 14px;
+        background: var(--bg-input);
+        color: var(--text-primary);
+      }
+      .search::placeholder {
+        color: var(--text-muted);
       }
       select {
         padding: 8px 12px;
-        border: 1px solid #e5e7eb;
+        border: 1px solid var(--border-color);
         border-radius: 8px;
         font-size: 14px;
-        background: white;
+        background: var(--bg-input);
+        color: var(--text-primary);
         cursor: pointer;
       }
       .reset-btn {
         padding: 8px 16px;
         border-radius: 8px;
-        border: 1px solid #e5e7eb;
-        background: white;
+        border: 1px solid var(--border-color);
+        background: var(--btn-bg);
         font-size: 14px;
         cursor: pointer;
-        color: #6b7280;
+        color: var(--btn-color);
       }
       .reset-btn:hover {
-        background: #f3f4f6;
+        background: var(--stat-bg);
       }
     `,
   ],

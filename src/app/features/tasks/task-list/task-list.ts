@@ -51,7 +51,7 @@ import { TaskCardComponent } from '../task-card/task-card';
       h2 {
         font-size: 22px;
         font-weight: 700;
-        color: #111827;
+        color: var(--text-primary);
         margin: 0 0 8px;
       }
       .stats-row {
@@ -65,21 +65,22 @@ import { TaskCardComponent } from '../task-card/task-card';
         font-weight: 500;
         padding: 4px 10px;
         border-radius: 20px;
-        background: #f3f4f6;
-        color: #374151;
+        background: var(--stat-bg);
+        color: var(--stat-color);
       }
       .empty {
         text-align: center;
         padding: 48px 24px;
-        color: #6b7280;
+        color: var(--text-secondary);
         font-size: 15px;
       }
       .empty button {
         margin-top: 12px;
         padding: 8px 20px;
         border-radius: 8px;
-        border: 1px solid #e5e7eb;
-        background: white;
+        border: 1px solid var(--border-color);
+        background: var(--btn-bg);
+        color: var(--btn-color);
         cursor: pointer;
         font-size: 14px;
       }

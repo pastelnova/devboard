@@ -46,8 +46,8 @@ type BadgeType = TaskStatus | TaskPriority;
         color: #92400e;
       }
       .low {
-        background: #f3f4f6;
-        color: #374151;
+        background: var(--stat-bg);
+        color: var(--stat-color);
       }
     `,
   ],

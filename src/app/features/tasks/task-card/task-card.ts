@@ -36,19 +36,19 @@ import { NgClass } from '@angular/common';
   styles: [
     `
       .card {
-        background: white;
+        background: var(--bg-card);
         border-radius: 10px;
         padding: 16px;
         margin-bottom: 12px;
         border-left: 4px solid transparent;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--shadow);
         transition:
           transform 0.15s,
           box-shadow 0.15s;
       }
       .card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: var(--shadow-hover);
       }
       .priority-high {
         border-left-color: #ef4444;
@@ -69,14 +69,14 @@ import { NgClass } from '@angular/common';
       .title {
         font-size: 15px;
         font-weight: 600;
-        color: #111827;
+        color: var(--text-primary);
         margin: 0;
         flex: 1;
         margin-right: 8px;
       }
       .description {
         font-size: 13px;
-        color: #6b7280;
+        color: var(--text-secondary);
         margin: 0 0 12px;
         line-height: 1.5;
       }
@@ -106,8 +106,8 @@ import { NgClass } from '@angular/common';
         color: white;
       }
       .btn-secondary {
-        background: #e5e7eb;
-        color: #374151;
+        background: var(--stat-bg);
+        color: var(--stat-color);
       }
       .btn-danger {
         background: #fee2e2;
