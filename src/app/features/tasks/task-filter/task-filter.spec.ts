@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TaskFilter } from './task-filter';
+import { TaskFilterComponent } from './task-filter';
 
 describe('TaskFilter', () => {
-  let component: TaskFilter;
-  let fixture: ComponentFixture<TaskFilter>;
+  let component: TaskFilterComponent;
+  let fixture: ComponentFixture<TaskFilterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TaskFilter],
+      imports: [TaskFilterComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TaskFilter);
+    fixture = TestBed.createComponent(TaskFilterComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
