@@ -1,17 +1,19 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { TaskFilterComponent } from '../task-filter/task-filter';
 import { TaskService } from '../../../core/services/task';
 import { TaskStatus } from '../../../core/models/task.model';
 import { TaskCardComponent } from '../task-card/task-card';
+import { TaskFormComponent } from '../task-form/task-form';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [TaskFilterComponent, TaskCardComponent],
+  imports: [TaskFilterComponent, TaskCardComponent, TaskFormComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: ` <div class="container">
     <div class="header">
       <h2>Tasks ({{ taskService.filteredTasks().length }})</h2>
+      <button class="btn-add-task" (click)="isFormVisible.set(true)">+ Add Task</button>
       <div class="stats-row">
         <span class="stat todo"> 📋 {{ taskService.todoCount() }} todo </span>
         <span class="stat in-progress"> ⚡ {{ taskService.inProgressCount() }} in progress </span>
@@ -19,6 +21,11 @@ import { TaskCardComponent } from '../task-card/task-card';
         <span class="stat completion"> {{ taskService.completionRate() }}% complete </span>
       </div>
     </div>
+
+    @if (isFormVisible()) {
+      <app-task-form (submitted)="onFormSubmitted()" (cancelled)="onFormCancelled()">
+      </app-task-form>
+    }
 
     <app-task-filter />
 
@@ -84,13 +91,37 @@ import { TaskCardComponent } from '../task-card/task-card';
         cursor: pointer;
         font-size: 14px;
       }
+      .btn-add-task {
+        padding: 8px 16px;
+        border-radius: 8px;
+        border: none;
+        background: #7f77dd;
+        color: white;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.15s;
+        margin-bottom: 8px;
+      }
+      .btn-add-task:hover {
+        background: #534ab7;
+      }
     `,
   ],
 })
 export class TaskListComponent {
   taskService = inject(TaskService);
+  isFormVisible = signal(false);
 
   onStatusChange(id: number, status: TaskStatus) {
     this.taskService.updateStatus(id, status);
+  }
+
+  onFormSubmitted() {
+    this.isFormVisible.set(false);
+  }
+
+  onFormCancelled() {
+    this.isFormVisible.set(false);
   }
 }

@@ -9,22 +9,39 @@ import { TaskPriority } from '../../../core/models/task.model';
   imports: [ReactiveFormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <input formControlName="title" type="text" placeholder="Task title" />
+    <div class="form-card">
+      <div class="form-title">New Task</div>
 
-      <textarea formControlName="description" placeholder="Description"> </textarea>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label>Title *</label>
+            <input formControlName="title" type="text" placeholder="Task title" />
+          </div>
 
-      <select formControlName="priority">
-        <option value="">Select priority</option>
-        <option value="high">High</option>
-        <option value="medium">Medium</option>
-        <option value="low">Low</option>
-      </select>
+          <div class="form-group full-width">
+            <label>Description</label>
+            <textarea formControlName="description" placeholder="Description (optional)">
+            </textarea>
+          </div>
 
-      <button type="submit" [disabled]="form.invalid">Add Task</button>
+          <div class="form-group">
+            <label>Priority *</label>
+            <select formControlName="priority">
+              <option value="">Select priority</option>
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+        </div>
 
-      <button type="button" (click)="onCancel()">Cancel</button>
-    </form>
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="onCancel()">Cancel</button>
+          <button type="submit" class="btn-submit" [disabled]="form.invalid">+ Add Task</button>
+        </div>
+      </form>
+    </div>
   `,
   styleUrl: './task-form.scss',
 })

@@ -163,4 +163,47 @@ describe('TaskList', () => {
       expect(filter).toBeTruthy;
     });
   });
+
+  describe('add task form', () => {
+    it('should have add task button', () => {
+      const btn = fixture.nativeElement.querySelector('.btn-add-task');
+      expect(btn).toBeTruthy();
+    });
+
+    it('should hide form by default', () => {
+      const form = fixture.nativeElement.querySelector('app-task-form');
+      expect(form).toBeFalsy();
+    });
+
+    it('should show form when add task button is clicked', () => {
+      const btn = fixture.nativeElement.querySelector('.btn-add-task');
+      btn.click();
+      fixture.detectChanges();
+
+      const form = fixture.nativeElement.querySelector('app-task-form');
+      expect(form).toBeTruthy();
+    });
+
+    it('should hide form after submitted event', () => {
+      component.isFormVisible.set(true);
+      fixture.detectChanges();
+
+      component.onFormSubmitted();
+      fixture.detectChanges();
+
+      const form = fixture.nativeElement.querySelector('app-task-form');
+      expect(form).toBeFalsy();
+    });
+
+    it('should hide form after cancelled event', () => {
+      component.isFormVisible.set(true);
+      fixture.detectChanges();
+
+      component.onFormCancelled();
+      fixture.detectChanges();
+
+      const form = fixture.nativeElement.querySelector('app-task-form');
+      expect(form).toBeFalsy();
+    });
+  });
 });
