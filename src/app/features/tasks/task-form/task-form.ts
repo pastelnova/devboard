@@ -34,6 +34,11 @@ import { TaskPriority } from '../../../core/models/task.model';
               <option value="low">Low</option>
             </select>
           </div>
+
+          <div class="form-group">
+            <label>Due Date</label>
+            <input type="date" formControlName="dueDate" />
+          </div>
         </div>
 
         <div class="form-actions">
@@ -51,6 +56,7 @@ export class TaskFormComponent {
     title: new FormControl('', Validators.required),
     description: new FormControl(''),
     priority: new FormControl('', Validators.required),
+    dueDate: new FormControl<Date | null>(null),
   });
 
   @Output() submitted = new EventEmitter<void>();
@@ -59,15 +65,17 @@ export class TaskFormComponent {
   onSubmit() {
     if (this.form.invalid) return;
 
-    const { title, description, priority } = this.form.getRawValue();
+    const { title, description, priority, dueDate } = this.form.getRawValue();
 
-    this.taskService.addTask({
+    const task = {
       title: title!,
       description: description ?? '',
       priority: priority as TaskPriority,
-      status: 'todo',
-    });
+      status: 'todo' as const,
+      ...(dueDate ? { dueDate: new Date(dueDate) } : {}),
+    };
 
+    this.taskService.addTask(task);
     this.form.reset();
     this.submitted.emit();
   }

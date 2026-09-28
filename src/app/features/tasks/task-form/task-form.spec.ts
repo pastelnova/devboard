@@ -135,4 +135,49 @@ describe('TaskFormComponent', () => {
       expect(emitted).toBeTruthy();
     });
   });
+
+  describe('due date', () => {
+    it('should render due date input', () => {
+      const input = fixture.nativeElement.querySelector('input[formControlName="dueDate"]');
+      expect(input).toBeTruthy();
+    });
+
+    it('should have due date as optional / form valid without it', () => {
+      component.form.get('title')?.setValue('New task');
+      component.form.get('priority')?.setValue('high');
+
+      expect(component.form.valid).toBeTruthy();
+    });
+
+    it('should include dueDate in addTask call when set', () => {
+      const dueDate = new Date('2026-12-31');
+      component.form.get('title')?.setValue('New task');
+      component.form.get('priority')?.setValue('high');
+      component.form.get('dueDate')?.setValue(dueDate);
+
+      component.onSubmit();
+
+      expect(taskServiceMock.addTask).toHaveBeenCalledWith({
+        title: 'New task',
+        description: '',
+        priority: 'high',
+        status: 'todo',
+        dueDate: dueDate,
+      });
+    });
+
+    it('should not include dueDate in addTask call when not set', () => {
+      component.form.get('title')?.setValue('New task');
+      component.form.get('priority')?.setValue('high');
+
+      component.onSubmit();
+
+      expect(taskServiceMock.addTask).toHaveBeenCalledWith({
+        title: 'New task',
+        description: '',
+        priority: 'high',
+        status: 'todo',
+      });
+    });
+  });
 });
