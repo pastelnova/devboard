@@ -153,6 +153,8 @@ import { DueDatePipe } from '../../../shared/pipes/due-date-pipe';
   ],
 })
 export class TaskCardComponent {
+  dueDatePipe = inject(DueDatePipe);
+
   @Input({ required: true }) task!: Task;
   @Output() statusChanged = new EventEmitter<TaskStatus>();
   @Output() deleted = new EventEmitter<number>();
