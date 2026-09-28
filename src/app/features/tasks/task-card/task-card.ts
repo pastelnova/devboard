@@ -1,12 +1,20 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+} from '@angular/core';
 import { BadgeComponent } from '../../../shared/components/badge/badge';
 import { Task, TaskStatus } from '../../../core/models/task.model';
 import { NgClass } from '@angular/common';
+import { DueDatePipe } from '../../../shared/pipes/due-date-pipe';
 
 @Component({
   selector: 'app-task-card',
   standalone: true,
-  imports: [BadgeComponent, NgClass],
+  imports: [BadgeComponent, NgClass, DueDatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="card" [ngClass]="'priority-' + task.priority">
@@ -15,7 +23,11 @@ import { NgClass } from '@angular/common';
         <app-badge [type]="task.status"></app-badge>
       </div>
       <p class="description">{{ task.description }}</p>
-
+      @if (task.dueDate) {
+        <span class="due-date-badge" [ngClass]="dueDatePipe.getUrgency(task.dueDate)">
+          {{ task.dueDate | dueDate }}
+        </span>
+      }
       <div class="card-footer">
         <app-badge [type]="task.status" />
 
@@ -113,6 +125,30 @@ import { NgClass } from '@angular/common';
         background: #fee2e2;
         color: #991b1b;
       }
+      .due-date-badge {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 500;
+        padding: 2px 8px;
+        border-radius: 20px;
+        margin-bottom: 8px;
+      }
+      .overdue {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      .today {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      .soon {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .upcoming {
+        background: #f3f4f6;
+        color: #374151;
+      }
     `,
   ],
 })
@@ -120,6 +156,8 @@ export class TaskCardComponent {
   @Input({ required: true }) task!: Task;
   @Output() statusChanged = new EventEmitter<TaskStatus>();
   @Output() deleted = new EventEmitter<number>();
+
+  dueDatePipe = new DueDatePipe();
 
   onStatusChange(status: TaskStatus) {
     this.statusChanged.emit(status);
