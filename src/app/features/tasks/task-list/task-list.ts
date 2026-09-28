@@ -23,8 +23,10 @@ import { TaskFormComponent } from '../task-form/task-form';
     </div>
 
     @if (isFormVisible()) {
-      <app-task-form (submitted)="onFormSubmitted()" (cancelled)="onFormCancelled()">
-      </app-task-form>
+      <div class="form-wrapper" data-animation="form">
+        <app-task-form (submitted)="onFormSubmitted()" (cancelled)="onFormCancelled()">
+        </app-task-form>
+      </div>
     }
 
     <app-task-filter />
@@ -105,6 +107,23 @@ import { TaskFormComponent } from '../task-form/task-form';
       }
       .btn-add-task:hover {
         background: #534ab7;
+      }
+
+      .form-wrapper {
+        animation: slideDown 300ms ease-out forwards;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          max-height: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          max-height: 500px;
+          transform: translateY(0);
+        }
       }
     `,
   ],

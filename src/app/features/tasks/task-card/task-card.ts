@@ -149,12 +149,26 @@ import { DueDatePipe } from '../../../shared/pipes/due-date-pipe';
         background: #f3f4f6;
         color: #374151;
       }
+
+      :host {
+        display: block;
+        animation: fadeInUp 300ms ease-out forwards;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
     `,
   ],
 })
 export class TaskCardComponent {
-  dueDatePipe = inject(DueDatePipe);
-
   @Input({ required: true }) task!: Task;
   @Output() statusChanged = new EventEmitter<TaskStatus>();
   @Output() deleted = new EventEmitter<number>();
